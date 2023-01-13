@@ -1,0 +1,4 @@
+CREATE TABLE song (
+   name VARCHAR(255) NOT NULL,
+   date DATE NOT NULL
+);

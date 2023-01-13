@@ -1,0 +1,30 @@
+version: "3.8"
+
+networks:
+  default:
+    name: reactive_network
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+  postgres:
+    image: postgres:13.2
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: pg_isready -U admin -d admin
+      interval: 3s
+      timeout: 5s
+      retries: 10
