@@ -14,12 +14,12 @@ class SongController {
     @Autowired
     private lateinit var songRepository: SongRepository
 
-    @GetMapping(value = ["/song/{name}"], produces = [TEXT_EVENT_STREAM_VALUE])
-    fun getUserById(@PathVariable name: String): Flux<Song> {
+    @GetMapping(value = ["/song"], produces = [TEXT_EVENT_STREAM_VALUE])
+    fun findSongs(): Flux<Song> {
         return songRepository.findAll().delayElements(ofSeconds(3))
     }
 
-    @PostMapping("/song")
+    @PostMapping(value = ["/song"], produces = [TEXT_EVENT_STREAM_VALUE])
     fun saveSong(@RequestBody song: Song): Mono<Song> {
         return songRepository.save(song)
     }

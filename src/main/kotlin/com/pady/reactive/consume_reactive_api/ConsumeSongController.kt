@@ -6,47 +6,44 @@ import org.springframework.web.reactive.function.client.WebClient
 import java.time.Duration
 
 @RestController
-class WebClientTestController {
+class ConsumeSongController {
 
     @GetMapping("/consume")
-    fun consume() {
-        val response = WebClient
-            .builder()
+    fun consumeAll() {
+        val response = WebClient.builder()
             .baseUrl(SONGS_URL)
             .build()
             .get()
             .retrieve()
             .bodyToFlux(Map::class.java)
-        response.subscribe { data ->
-            println(data)
+        response.subscribe { song ->
+            println(song)
         }
     }
 
     @GetMapping("/consume-only-two")
     fun consumeOnlyTwo() {
-        val response = WebClient
-            .builder()
+        val response = WebClient.builder()
             .baseUrl(SONGS_URL)
             .build()
             .get()
             .retrieve()
             .bodyToFlux(Map::class.java)
-        response.take(2).subscribe { data ->
-            println(data)
+        response.take(2).subscribe { song ->
+            println(song)
         }
     }
 
     @GetMapping("/consume-for-five-seconds")
     fun consumeForFiveSeconds() {
-        val response = WebClient
-            .builder()
+        val response = WebClient.builder()
             .baseUrl(SONGS_URL)
             .build()
             .get()
             .retrieve()
             .bodyToFlux(Map::class.java)
-        response.take(Duration.ofSeconds(5)).subscribe { data ->
-            println(data)
+        response.take(Duration.ofSeconds(5)).subscribe { song ->
+            println(song)
         }
     }
 
