@@ -49,4 +49,4 @@ class ConsumeSongController {
 
 }
 
-private const val SONGS_URL = "http://127.0.0.1:8080/song/hola"
+private const val SONGS_URL = "http://127.0.0.1:8080/song"
